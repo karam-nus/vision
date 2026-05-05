@@ -1,0 +1,146 @@
+title: "Computer Vision — The Complete Guide"
+description: "From Pixels to Predictions: Understanding, building, and deploying ML-based computer vision systems. A comprehensive reference for practitioners and researchers."
+baseurl: "/vision"
+url: "https://karam-nus.github.io"
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: "highlight"
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: false
+
+include:
+  - README.md
+
+navigation:
+  - title: "🏠 Home"
+    url: "/"
+  - title: "── OVERVIEW ──"
+    url: "/00_grand_overview"
+  - title: "00 — Grand Overview"
+    url: "/00_grand_overview"
+  - title: "01 — Image Fundamentals"
+    url: "/01_image_fundamentals"
+  - title: "── USE CASES ──"
+    url: "/02_image_classification"
+  - title: "02 — Image Classification"
+    url: "/02_image_classification"
+  - title: "03 — Object Detection"
+    url: "/03_object_detection"
+  - title: "04 — Semantic Segmentation"
+    url: "/04_semantic_segmentation"
+  - title: "05 — Instance Segmentation"
+    url: "/05_instance_segmentation"
+  - title: "06 — Object Tracking"
+    url: "/06_object_tracking"
+  - title: "07 — Pose Estimation"
+    url: "/07_pose_estimation"
+  - title: "08 — Face Recognition"
+    url: "/08_face_recognition"
+  - title: "09 — Depth Estimation"
+    url: "/09_depth_estimation"
+  - title: "10 — Optical Flow"
+    url: "/10_optical_flow"
+  - title: "11 — Video Understanding"
+    url: "/11_video_understanding"
+  - title: "12 — 3D Vision"
+    url: "/12_3d_vision"
+  - title: "13 — Anomaly Detection"
+    url: "/13_anomaly_detection"
+  - title: "14 — OCR & Document Understanding"
+    url: "/14_ocr_and_document_understanding"
+  - title: "15 — Medical Imaging"
+    url: "/15_medical_imaging"
+  - title: "16 — Multimodal Vision Tasks"
+    url: "/16_multimodal_vision_tasks"
+  - title: "── ARCHITECTURES ──"
+    url: "/17_cnn_fundamentals"
+  - title: "17 — CNN Fundamentals"
+    url: "/17_cnn_fundamentals"
+  - title: "18 — Classification Architectures"
+    url: "/18_classification_architectures"
+  - title: "19 — Detection Architectures"
+    url: "/19_detection_architectures"
+  - title: "20 — Segmentation Architectures"
+    url: "/20_segmentation_architectures"
+  - title: "21 — Pose Architectures"
+    url: "/21_pose_architectures"
+  - title: "22 — Face Architectures"
+    url: "/22_face_architectures"
+  - title: "23 — Tracking Architectures"
+    url: "/23_tracking_architectures"
+  - title: "24 — Vision Transformers"
+    url: "/24_vision_transformers"
+  - title: "25 — Multimodal Architectures"
+    url: "/25_multimodal_architectures"
+  - title: "── OPTIMIZATION ──"
+    url: "/26_optimization_overview"
+  - title: "26 — Optimization Overview"
+    url: "/26_optimization_overview"
+  - title: "27 — Quantization"
+    url: "/27_quantization"
+  - title: "28 — Pruning & Sparsification"
+    url: "/28_pruning_and_sparsification"
+  - title: "29 — Knowledge Distillation"
+    url: "/29_knowledge_distillation"
+  - title: "30 — Neural Architecture Search"
+    url: "/30_neural_architecture_search"
+  - title: "31 — Efficient Inference"
+    url: "/31_efficient_inference"
+  - title: "── DATA & TRAINING ──"
+    url: "/32_datasets"
+  - title: "32 — Datasets"
+    url: "/32_datasets"
+  - title: "33 — Data Augmentation"
+    url: "/33_data_augmentation"
+  - title: "34 — Training Recipes"
+    url: "/34_training_recipes"
+  - title: "35 — Self-Supervised Learning"
+    url: "/35_self_supervised_learning"
+  - title: "── DEPLOYMENT ──"
+    url: "/36_deployment"
+  - title: "36 — Deployment"
+    url: "/36_deployment"
+  - title: "37 — Ecosystem & Libraries"
+    url: "/37_ecosystem_and_libraries"
+  - title: "38 — Evaluation & Benchmarks"
+    url: "/38_evaluation_and_benchmarks"
+  - title: "── FRONTIER ──"
+    url: "/39_vision_language_models"
+  - title: "39 — Vision–Language Models"
+    url: "/39_vision_language_models"
+  - title: "40 — Foundation Models"
+    url: "/40_foundation_models"
+  - title: "41 — Generative Vision"
+    url: "/41_generative_vision"
+  - title: "42 — The Frontier"
+    url: "/42_frontier"
+  - title: "── APPENDICES ──"
+    url: "/appendix_a_history"
+  - title: "Appendix A — History of CV"
+    url: "/appendix_a_history"
+  - title: "Appendix B — Math Foundations"
+    url: "/appendix_b_math_foundations"
+  - title: "Appendix C — Glossary"
+    url: "/appendix_c_glossary"
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
