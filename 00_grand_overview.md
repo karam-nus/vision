@@ -284,13 +284,13 @@ graph TD
 
 **Scene recognition** classifies the type of place/environment (bedroom, highway, kitchen, office) rather than the objects within it. Places365 contains 365 scene categories with ~1.8M training images. Models must capture global layout and material context rather than individual objects.
 
-| Task | Key Dataset | Metric | SoTA (2024) |
-|------|-------------|--------|-------------|
-| Single-label classification | ImageNet-1K | Top-1 Acc | ~91% (ViT-22B) |
-| Multi-label classification | MS-COCO | mAP | ~91% (ASL-based) |
-| Fine-grained (birds) | CUB-200-2011 | Top-1 Acc | ~92% (ViT-L fine-tuned) |
-| Scene recognition | Places365 | Top-1 Acc | ~61% |
-| Image retrieval | Oxford5K | mAP@100 | >90% (DELG) |
+| Task | Key Dataset | Metric | SoTA (as of 2024) |
+|------|-------------|--------|-------------------|
+| Single-label classification | ImageNet-1K | Top-1 Acc | ~91% (ViT-22B, 2023) |
+| Multi-label classification | MS-COCO | mAP | ~91% (ASL-based, 2021) |
+| Fine-grained (birds) | CUB-200-2011 | Top-1 Acc | ~92% (ViT-L fine-tuned, 2022) |
+| Scene recognition | Places365 | Top-1 Acc | ~61% (ConvNeXt-XL, 2022) |
+| Image retrieval | Oxford5K | mAP@100 | >90% (DELG, 2020) |
 
 ### Region / Instance-Level Tasks
 
@@ -511,9 +511,9 @@ Benchmarks provide a standardized way to compare models. The two most important 
 | ConvNeXt-XL | 2022 | 350 | 179 | 87.0 | IN-21K+1K |
 | ViT-H/14 (MAE) | 2021 | 632 | 1245 | 87.8 | IN-1K |
 | EVA-02-L | 2023 | 304 | 362 | 89.6 | merged-38M |
-| ViT-22B | 2023 | 22,000 | — | 90.9 | JFT-3B |
+| ViT-22B | 2023 | 22,000 | —‡ | 90.9 | JFT-3B |
 
-> **Note:** Top-1 accuracy above ~90% involves extremely large models trained on proprietary data. For practical use, 80–87% accuracy at <100M parameters is achievable.
+> **Note:** Top-1 accuracy above ~90% involves extremely large models trained on proprietary data. For practical use, 80–87% accuracy at <100M parameters is achievable. ‡GFLOPs for ViT-22B are not publicly disclosed by the authors.
 
 ### Accuracy-Efficiency Frontier
 
@@ -635,7 +635,7 @@ def model_memory_gb(params_millions, precision_bytes=4):
     return memory_bytes / (1024**3)
 
 # Examples
-print(f"ResNet-50 FP32: {model_memory_gb(25, 4):.2f} GB")        # 0.09 GB
+print(f"ResNet-50 FP32: {model_memory_gb(25, 4):.2f} GB")        # ~0.09 GB
 print(f"ViT-L/16 FP32:  {model_memory_gb(307, 4):.2f} GB")       # 1.14 GB
 print(f"ViT-H/14 FP32:  {model_memory_gb(632, 4):.2f} GB")       # 2.35 GB
 print(f"ViT-L/16 FP16:  {model_memory_gb(307, 2):.2f} GB")       # 0.57 GB
