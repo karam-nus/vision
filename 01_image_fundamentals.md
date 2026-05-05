@@ -18,7 +18,7 @@ A digital image is a discrete, finite-dimensional array of numbers. At the hardw
 
 ### Spatial and Channel Dimensions
 
-A colour image has three logical dimensions:
+A color image has three logical dimensions:
 
 - **H** — height in pixels (rows)
 - **W** — width in pixels (columns)
@@ -70,9 +70,10 @@ This means all channels of pixel `(r, c)` are adjacent in memory. When you call 
 ```python
 import numpy as np
 img = np.zeros((480, 640, 3), dtype=np.uint8)  # HWC
-print(img.strides)  # (1920, 3, 1)  — move 1920 bytes per row, 3 per column, 1 per channel
+print(img.strides)  # (1920, 3, 1)  — strides in bytes: 640*3=1920 per row, 3 per column, 1 per channel
+                    # For float32 (4 bytes/element) a [480,640,3] array would give (7680, 12, 4)
 img_chw = np.ascontiguousarray(img.transpose(2, 0, 1))  # CHW
-print(img_chw.strides)  # (307200, 640, 1)  — move 307200 bytes per channel plane
+print(img_chw.strides)  # (307200, 640, 1)  — 480*640*1=307200 bytes per channel plane
 ```
 
 ### NCHW Memory Layout Diagram
@@ -219,11 +220,11 @@ The ITU-R BT.709 standard luminance formula (used for sRGB displays) is:
 
 $$Y = 0.2126 R + 0.7152 G + 0.0722 B$$
 
-The older BT.601 formula (used by OpenCV's `COLOR_BGR2GRAY`) weights green more heavily:
+The older BT.601 formula (used by OpenCV's `COLOR_BGR2GRAY`) also weights green heavily, though slightly less than BT.709:
 
 $$Y = 0.299 R + 0.587 G + 0.114 B$$
 
-The high weight on green reflects the eye's peak sensitivity near 555 nm.
+Both formulas give the highest weight to green, reflecting the eye's peak photopic sensitivity near 555 nm. BT.709 pushes this further (0.7152 vs 0.587) to reflect the tighter sRGB primaries used on modern displays.
 
 ### Color Space Properties Diagram
 
@@ -395,6 +396,9 @@ def letterbox(
     dw = (target - new_w) / 2   # horizontal padding (float, will be rounded)
     dh = (target - new_h) / 2   # vertical padding   (float, will be rounded)
 
+    # The ±0.1 bias ensures that when dh/dw is exactly x.5, rounding favours
+    # slightly less padding on the top/left side (top < bottom, left < right).
+    # This avoids off-by-one errors that would make the padded image 1 px too large.
     top    = int(round(dh - 0.1))
     bottom = int(round(dh + 0.1))
     left   = int(round(dw - 0.1))
@@ -498,7 +502,7 @@ Both use 2 bytes, but the exponent/mantissa split differs:
 ```
 float32:   1 sign + 8 exponent + 23 mantissa = 32 bits
 float16:   1 sign + 5 exponent + 10 mantissa = 16 bits  ← narrow range, overflow risk
-bfloat16:  1 sign + 8 exponent +  7 mantissa = 16 bits  ← same range as fp32, less precision
+bfloat16:  1 sign + 8 exponent +  7 mantissa = 16 bits  ← same dynamic range (exponent) as fp32, much less precision
 ```
 
 **bfloat16** (Brain Float 16, developed by Google for TPUs) avoids the overflow problem of float16 during backpropagation (gradients can temporarily exceed ±65504). PyTorch supports bfloat16 on Ampere+ GPUs and all TPUs. NVIDIA Hopper (H100) has hardware acceleration for both.
@@ -959,6 +963,10 @@ def load_with_exif_rotation(path: str) -> Image.Image:
                 k for k, v in ExifTags.TAGS.items() if v == 'Orientation'
             )
             orientation = exif.get(orientation_key)
+            # Handles pure-rotation orientations only (values 3, 6, 8).
+            # Orientations 2, 4, 5, 7 include a horizontal/vertical mirror
+            # component and are not handled here — add PIL.Image.transpose()
+            # calls for those if mirrored images are present in the dataset.
             rotation_map = {3: 180, 6: 270, 8: 90}
             if orientation in rotation_map:
                 img = img.rotate(rotation_map[orientation], expand=True)
